@@ -1,0 +1,3 @@
+# https://index.ts.robotstxt.org/robotstxt.html
+UserModel-agent: *
+Disallow:

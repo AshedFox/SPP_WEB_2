@@ -1,0 +1,22 @@
+.container {
+  max-width: 1096px;
+  margin: 0 auto;
+  height: calc(100vh - 48px);
+}
+@media (max-width: 1108px) {
+  .container {
+    max-width: 970px;
+  }
+}
+@media (max-width: 991.98px) {
+  .container {
+    max-width: 750px;
+  }
+}
+@media (max-width: 767.98px) {
+  .container {
+    max-width: none;
+    padding: 0 10px;
+  }
+}
+/*# sourceMappingURL=Page.module.css.map */

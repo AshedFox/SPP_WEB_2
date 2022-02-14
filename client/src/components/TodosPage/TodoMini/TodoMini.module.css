@@ -1,0 +1,26 @@
+.container {
+  background-color: #e8d8f2;
+  border-radius: 8px;
+  padding: 5px 15px;
+}
+.container .header {
+  margin-bottom: 15px;
+}
+.container .header .name {
+  font-size: 21px;
+}
+.container .main {
+  margin-bottom: 10px;
+}
+.container .main .desc {
+  font-size: 12px;
+}
+.container .footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.container .footer .datetime {
+  font-size: 13px;
+}
+/*# sourceMappingURL=TodoMini.module.css.map */

@@ -1,0 +1,56 @@
+.container {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  background: #1b0e2c;
+  height: 48px;
+}
+.container .content {
+  height: 100%;
+  max-width: 1096px;
+  display: flex;
+  margin: 0 auto;
+}
+@media (max-width: 1108px) {
+  .container .content {
+    max-width: 970px;
+  }
+}
+@media (max-width: 991.98px) {
+  .container .content {
+    max-width: 750px;
+  }
+}
+@media (max-width: 767.98px) {
+  .container .content {
+    max-width: none;
+    padding: 0 10px;
+  }
+}
+.container .content .navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  color: #fafafa;
+}
+.container .content .navigation .link {
+  transition: 0.25s;
+  font-size: 18px;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  margin-left: auto;
+}
+.container .content .navigation .link:hover {
+  border-bottom: 2px solid #fafafa;
+}
+.container .content .navigation .links_list {
+  display: flex;
+  align-items: center;
+}
+.container .content .navigation .links_list > *:not(:last-child) {
+  margin-right: 10px;
+}
+/*# sourceMappingURL=Header.module.css.map */
