@@ -8,6 +8,12 @@
 .container > * {
   background-color: #e8d8f2;
 }
+.container.completed > * {
+  background-color: #e7ffe7 !important;
+}
+.container.failed > * {
+  background-color: #ffdcdc !important;
+}
 .container .header {
   display: flex;
   align-items: center;
@@ -25,6 +31,8 @@
   outline: none;
   flex: 1;
   min-width: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .container .main {
   flex: 1;

@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {ChangeEvent, FC} from 'react';
 import {TodoModel} from "../../../models/TodoModel";
 import styles from "./TodoMini.module.css";
 import {Link} from "react-router-dom";
@@ -12,7 +12,7 @@ type Props = {
 }
 
 const TodoMini: FC<Props> = observer(({todo}) => {
-    const {deleteTodo, deleteLocalTodo, deleteFromTodos} = useTodosStore();
+    const {updateTodo, updateLocalTodo, updateTodos, deleteTodo, deleteLocalTodo, deleteFromTodos} = useTodosStore();
     const {account} = useAccountStore();
 
     const handleTodoDeletion = () => {
@@ -29,9 +29,24 @@ const TodoMini: FC<Props> = observer(({todo}) => {
         }
     }
 
+    const handleTodoEdit = (e: ChangeEvent<HTMLInputElement>) => {
+        const newTodo: TodoModel = {...todo, isCompleted: e.target.checked};
+
+        if (account) {
+            updateTodo(todo.id, newTodo).then(() => updateTodos(todo.id, newTodo))
+        } else {
+            updateLocalTodo(todo.id, newTodo)
+            updateTodos(todo.id, newTodo)
+        }
+    }
+
     return (
-        <div className={`${styles.container} ${todo.plannedTo && new Date() > new Date(todo.plannedTo) ? styles.failed : ''}`}>
+        <div className={`${styles.container} ${
+            todo.isCompleted ? styles.completed : 
+                todo.plannedTo && new Date() > new Date(todo.plannedTo) ? styles.failed : ''
+        }`}>
             <div className={styles.header}>
+                <input className={styles.checkbox} type={'checkbox'} checked={todo.isCompleted} onChange={handleTodoEdit}/>
                 <Link to={`${routes.todo.pathnameBase}/${todo.id}`} className={styles.name} title={'Перейти к заметке'}>{todo.name}</Link>
                 <div className={styles.delete} title={'Удалить заметку'} onClick={handleTodoDeletion}>{'×'}</div>
             </div>

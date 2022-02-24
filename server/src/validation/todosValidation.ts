@@ -49,6 +49,7 @@ const updateTodo = [
     body('plannedTo').optional({checkFalsy: true})
         .isISO8601().withMessage('plannedTo must be correct ISO8601 date')
         .toDate(),
+    body('isCompleted').isBoolean().withMessage('isCompleted must be boolean'),
     validate
 ]
 

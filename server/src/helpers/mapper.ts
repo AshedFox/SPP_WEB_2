@@ -11,7 +11,8 @@ class Mapper {
         description: todo.description,
         user: todo.user,
         plannedTo: todo.plannedTo,
-        createdAt: todo.createdAt
+        createdAt: todo.createdAt,
+        isCompleted: todo.isCompleted
     })
 
     toUserDto = (user: HydratedDocument<User>): UserDto => ({

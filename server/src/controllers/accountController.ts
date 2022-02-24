@@ -59,6 +59,7 @@ class AccountController {
     }
     logout = async (req: Request, res: Response) => {
         try {
+            await accountService.removeRefreshToken(cookieManager.getRefreshTokenFromCookies(req));
             cookieManager.removeTokensCookies(res);
 
             return res.sendStatus(204);

@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import jwt, {TokenExpiredError} from "jsonwebtoken";
+import jwt, {JwtPayload, TokenExpiredError} from "jsonwebtoken";
 import accountService from "../services/accountService";
 import cookieManager from "../helpers/cookieManager";
 
@@ -11,10 +11,10 @@ const authorizeToken = async (req: Request, res: Response, next: NextFunction) =
             await tryRefreshTokens(req, res, next);
         }
         else {
-            req.body.user = jwt.verify(accessToken, process.env.SECRET as string, {
+            req.body.user = (jwt.verify(accessToken, process.env.SECRET as string, {
                 audience: process.env.AUDIENCE,
                 issuer: process.env.ISSUER
-            });
+            }) as JwtPayload).sub;
 
             next();
         }

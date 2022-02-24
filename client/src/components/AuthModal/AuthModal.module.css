@@ -117,9 +117,7 @@
 .container .content .form {
   display: flex;
   flex-direction: column;
-}
-.container .content .form > *:not(:last-child) {
-  margin-bottom: 30px;
+  gap: 30px;
 }
 .container .content .form .fields {
   display: flex;

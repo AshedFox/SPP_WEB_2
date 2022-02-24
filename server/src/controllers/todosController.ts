@@ -1,5 +1,4 @@
 import {Request, Response} from "express";
-import {validationResult} from "express-validator";
 import todosService from "../services/todosService";
 import {TodoToAddDto} from "../dtos/TodoToAddDto";
 import {TodoToEditDto} from "../dtos/TodoToEditDto";
@@ -8,7 +7,7 @@ import {Types} from "mongoose";
 class TodosController {
     getTodos = async (req: Request, res: Response) => {
         try {
-            const result = await todosService.getTodos();
+            const result = await todosService.getTodos(req.body.user);
             return res.status(200).json(result);
         } catch (e) {
             return res.sendStatus(500);
@@ -33,7 +32,7 @@ class TodosController {
                 name: req.body.name,
                 description: req.body.description,
                 plannedTo: req.body.plannedTo,
-                user: req.body.user.sub,
+                user: req.body.user,
             };
 
             const result = await todosService.createTodo(todo);
@@ -54,7 +53,8 @@ class TodosController {
                 name: req.body.name,
                 description: req.body.description,
                 plannedTo: req.body.plannedTo,
-                createdAt: req.body.createdAt
+                createdAt: req.body.createdAt,
+                isCompleted: req.body.isCompleted
             };
 
             const result = await todosService.getTodo(new Types.ObjectId(req.params.id));
@@ -74,7 +74,7 @@ class TodosController {
         try {
             const todo = await todosService.getTodo(new Types.ObjectId(req.params.id));
 
-            if (!todo) {
+            if (!todo || todo.user.toString() !== req.body.user) {
                 return res.sendStatus(404);
             }
 

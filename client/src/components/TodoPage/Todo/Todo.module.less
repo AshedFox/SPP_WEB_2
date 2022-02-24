@@ -11,6 +11,18 @@
     background-color: @color5;
   }
 
+  &.completed {
+    & > * {
+      background-color: #e7ffe7 !important;
+    }
+  }
+
+  &.failed {
+    & > * {
+      background-color: #ffdcdc !important;
+    }
+  }
+
   .header{
     display: flex;
     align-items: center;
@@ -28,6 +40,8 @@
       outline: none;
       flex: 1;
       min-width: 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
   .main {

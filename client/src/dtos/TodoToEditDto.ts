@@ -3,5 +3,6 @@ export interface TodoToEditDto {
     name: string,
     description?: string,
     createdAt: string,
-    plannedTo?: string
+    plannedTo?: string,
+    isCompleted: boolean
 }

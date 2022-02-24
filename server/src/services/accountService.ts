@@ -7,6 +7,7 @@ import {UserDto} from "../dtos/UserDto";
 import mapper from "../helpers/mapper";
 import RefreshTokenModel from "../models/RefreshTokenModel";
 import tokensGenerator from "../helpers/tokensGenerator";
+import {ObjectId} from "mongodb";
 
 class AccountService {
     signUpUser = async (signUpDto: SignUpDto) => {
@@ -60,6 +61,10 @@ class AccountService {
         } catch (e) {
             throw e;
         }
+    }
+
+    removeRefreshToken = async (refreshToken: string) => {
+        await RefreshTokenModel.findOneAndDelete({value: refreshToken}).exec();
     }
 }
 

@@ -10,7 +10,8 @@ type FormParams = {
     createdAtMax?: string,
     plannedToMin?: string,
     plannedToMax?: string,
-    hideExpired?: boolean
+    hideExpired?: boolean,
+    hideCompleted?: boolean
 }
 
 const initialFormData: FormParams = {
@@ -20,7 +21,8 @@ const initialFormData: FormParams = {
     createdAtMax: '',
     plannedToMin: '',
     plannedToMax: '',
-    hideExpired: false
+    hideExpired: false,
+    hideCompleted: false
 }
 
 const Options = observer(() => {
@@ -39,10 +41,10 @@ const Options = observer(() => {
         e.preventDefault();
 
         if (formData.name || formData.description || formData.createdAtMin || formData.createdAtMax ||
-            formData.plannedToMin || formData.plannedToMax || formData.hideExpired)
+            formData.plannedToMin || formData.plannedToMax || formData.hideExpired || formData.hideCompleted)
         {
             filterTodos(formData.name, formData.description, formData.createdAtMin, formData.createdAtMax,
-                formData.plannedToMin, formData.plannedToMax, formData.hideExpired);
+                formData.plannedToMin, formData.plannedToMax, formData.hideExpired, formData.hideCompleted);
         }
     }
 
@@ -90,6 +92,12 @@ const Options = observer(() => {
                     <label className={styles.checkbox_label}>Скрыть прошедшие?
                         <input className={styles.checkbox} name={'hideExpired'} type={'checkbox'}
                                checked={formData.hideExpired}
+                               onChange={handleCheckboxChange}
+                        />
+                    </label>
+                    <label className={styles.checkbox_label}>Скрыть выполненные?
+                        <input className={styles.checkbox} name={'hideCompleted'} type={'checkbox'}
+                               checked={formData.hideCompleted}
                                onChange={handleCheckboxChange}
                         />
                     </label>

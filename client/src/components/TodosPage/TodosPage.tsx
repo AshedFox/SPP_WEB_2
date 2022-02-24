@@ -16,7 +16,7 @@ import {TodosSortType} from "../../stores/todos/TodosSortType";
 
 
 const TodosPage = observer(() => {
-    const {status, todos, filteredTodos, getTodos, getLocalTodos, sortTodos, resetTodos} = useTodosStore();
+    const {status, todos, filteredTodos, changeSortType, getTodos, getLocalTodos, resetTodos} = useTodosStore();
     const {account} = useAccountStore();
     const {setStatus} = useOptionsSideBar();
     const [isMatchMedia, setIsMatchMedia] = useState<boolean>();
@@ -46,7 +46,7 @@ const TodosPage = observer(() => {
 
     const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
         if (Object.values(TodosSortType).includes(e.target.value as TodosSortType)) {
-            sortTodos(e.target.value as TodosSortType);
+            changeSortType(e.target.value as TodosSortType);
         }
     }
 
@@ -105,7 +105,7 @@ const TodosPage = observer(() => {
                                     </>
                                 }
                                 <div className={styles.sort}>
-                                    <select className={styles.select} onChange={(e) => handleSortChange(e)}>
+                                    <select className={styles.select} onChange={handleSortChange}>
                                         <option value={TodosSortType.CreatedAtAsc}>Дата создания (возр.)</option>
                                         <option value={TodosSortType.CreatedAtDesc}>Дата создания (уб.)</option>
                                         <option value={TodosSortType.PlannedToAsc}>Планируемая дата (возр.)</option>

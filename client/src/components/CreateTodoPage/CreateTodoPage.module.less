@@ -13,7 +13,84 @@
     padding: 20px;
 
     .content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
 
+      .title {
+        font-size: 24px;
+        font-weight: 500;
+        color: @textColor2;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+        .fields {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          .label {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            color: @textColor2;
+            font-size: 14px;
+            padding: 0 10px;
+
+            .input {
+              background-color: @color6;
+              border-radius: 10px;
+              box-shadow: 2px 4px 4px 0 rgba(0, 0, 0, 0.25);
+              padding: 7px 10px;
+              font-size: 12px;
+
+              outline: none;
+              border: none;
+
+              &:not(:last-child) {
+                margin-bottom: 20px;
+              }
+
+              &::placeholder {
+                color: @color3;
+              }
+            }
+          }
+        }
+
+        .message {
+          &.error {
+            color: @errorColorLight;
+          }
+        }
+
+        .button {
+          color: @textColor2;
+          background-color: @color2;
+          border-radius: 10px;
+
+          flex:1;
+          padding: 10px;
+
+          outline: none;
+          border: none;
+
+          font-size: 20px;
+          font-weight: 600;
+
+          cursor: pointer;
+          box-shadow: 2px 4px 4px 0 transparent;
+          transition: box-shadow 0.4s ease;
+
+          &:hover {
+            box-shadow: 2px 4px 4px 0 rgba(0, 0, 0, 0.25);
+          }
+        }
+      }
     }
   }
 }

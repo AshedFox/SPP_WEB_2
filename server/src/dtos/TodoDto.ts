@@ -4,5 +4,7 @@ export interface TodoDto {
     description?: string,
     user: any,
     createdAt: Date,
-    plannedTo?: Date
+    plannedTo?: Date,
+    isCompleted: boolean
+
 }

@@ -1,8 +1,7 @@
-import React, {ChangeEvent, FC, useEffect, useRef, useState} from 'react';
+import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import {TodoModel} from "../../../models/TodoModel";
 import styles from './Todo.module.css';
 import {observer} from "mobx-react-lite";
-import useAccountStore from "../../../stores/account/useAccountStore";
 import useTodosStore from "../../../stores/todos/useTodosStore";
 import {TodoToEditDto} from "../../../dtos/TodoToEditDto";
 import useFeaturesBar from "../../../stores/featuresBar/useFeaturesBar";
@@ -19,7 +18,8 @@ const Todo: FC<Props> = observer(({todo}) => {
         name: todo.name,
         description: todo.description,
         createdAt: todo.createdAt,
-        plannedTo: todo.plannedTo
+        plannedTo: todo.plannedTo,
+        isCompleted: todo.isCompleted
     });
 
     useEffect(() => {
@@ -29,6 +29,10 @@ const Todo: FC<Props> = observer(({todo}) => {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
         setTodoToEdit(prev => ({...prev, [e.target.name]: e.target.value}))
+    }
+
+    const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setTodoToEdit(prev => ({...prev, [e.target.name]: e.target.checked}))
     }
 
     const replaceTodoValues = () => {
@@ -41,8 +45,14 @@ const Todo: FC<Props> = observer(({todo}) => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${
+            todo.isCompleted ? styles.completed :
+                todo.plannedTo && new Date() > new Date(todo.plannedTo) ? styles.failed : ''
+        }`}>
             <div className={styles.header}>
+                <input className={styles.checkbox} name={'isCompleted'} type={"checkbox"} checked={todoToEdit.isCompleted}
+                       disabled={!isInEditMode} onChange={handleCheckboxChange}
+                />
                 <input className={styles.name} name={'name'} type={"text"} value={todoToEdit.name}
                        readOnly={!isInEditMode} onChange={handleChange}
                 />

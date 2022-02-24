@@ -17,62 +17,71 @@ class TodosStore {
 
     todos?: TodoModel[];
     filteredTodos?: TodoModel[];
-
+    currentSortType: TodosSortType = TodosSortType.CreatedAtAsc;
     currentTodo?: TodoModel;
 
     resetTodos = () => this.todos = undefined;
 
     resetCurrentTodo = () => this.currentTodo = undefined;
 
-    sortTodos = (type: TodosSortType) => {
+    changeSortType = (type: TodosSortType) => {
+        this.currentSortType = type;
+        this.sortTodos();
+    }
+
+    private sort = (array: TodoModel[]) => {
+        switch (this.currentSortType) {
+            case TodosSortType.CreatedAtAsc: {
+                return array.sort((todo1, todo2) => {
+                    return new Date(todo1.createdAt).valueOf() - new Date(todo2.createdAt).valueOf();
+                })
+            }
+            case TodosSortType.CreatedAtDesc: {
+                return array.sort((todo1, todo2) => {
+                    return new Date(todo2.createdAt).valueOf() - new Date(todo1.createdAt).valueOf();
+                })
+            }
+            case TodosSortType.PlannedToAsc: {
+                return array.sort((todo1, todo2) => {
+                    if (!todo1.plannedTo && !todo2.plannedTo) {
+                        return 0;
+                    } else if (!todo1.plannedTo) {
+                        return 1;
+                    } else if (!todo2.plannedTo) {
+                        return -1;
+                    }
+
+                    return new Date(todo1.plannedTo).valueOf() - new Date(todo2.plannedTo).valueOf();
+                })
+            }
+            case TodosSortType.PlannedToDesc: {
+                return array.sort((todo1, todo2) => {
+                    if (!todo1.plannedTo && !todo2.plannedTo) {
+                        return 0;
+                    } else if (!todo1.plannedTo) {
+                        return 1;
+                    } else if (!todo2.plannedTo) {
+                        return -1;
+                    }
+
+                    return new Date(todo2.plannedTo).valueOf() - new Date(todo1.plannedTo).valueOf();
+                })
+            }
+        }
+    }
+
+    private sortTodos = () => {
         if (this.todos) {
-            switch (type) {
-                case TodosSortType.CreatedAtAsc: {
-                    this.todos = this.todos.sort((todo1, todo2) => {
-                        return new Date(todo1.createdAt).valueOf() - new Date(todo2.createdAt).valueOf();
-                    })
-                    break;
-                }
-                case TodosSortType.CreatedAtDesc: {
-                    this.todos = this.todos.sort((todo1, todo2) => {
-                        return new Date(todo2.createdAt).valueOf() - new Date(todo1.createdAt).valueOf();
-                    })
-                    break;
-                }
-                case TodosSortType.PlannedToAsc: {
-                    this.todos = this.todos.sort((todo1, todo2) => {
-                        if (!todo1.plannedTo && !todo2.plannedTo) {
-                            return 0;
-                        } else if (!todo1.plannedTo) {
-                            return 1;
-                        } else if (!todo2.plannedTo) {
-                            return -1;
-                        }
+            this.todos = this.sort(this.todos);
 
-                        return new Date(todo1.plannedTo).valueOf() - new Date(todo2.plannedTo).valueOf();
-                    })
-                    break;
-                }
-                case TodosSortType.PlannedToDesc: {
-                    this.todos = this.todos.sort((todo1, todo2) => {
-                        if (!todo1.plannedTo && !todo2.plannedTo) {
-                            return 0;
-                        } else if (!todo1.plannedTo) {
-                            return 1;
-                        } else if (!todo2.plannedTo) {
-                            return -1;
-                        }
-
-                        return new Date(todo2.plannedTo).valueOf() - new Date(todo1.plannedTo).valueOf();
-                    })
-                    break;
-                }
+            if (this.filteredTodos) {
+                this.filteredTodos = this.sort(this.filteredTodos);
             }
         }
     }
 
     filterTodos = (name?: string, description?: string, createdAtMin?: string, createdAtMax?: string,
-                   plannedToMin?: string, plannedToMax?: string, hideExpired?: boolean) =>
+                   plannedToMin?: string, plannedToMax?: string, hideExpired?: boolean, hideCompleted?: boolean) =>
     {
         if (this.todos) {
             this.filteredTodos = this.todos;
@@ -108,10 +117,16 @@ class TodosStore {
                     !(todo.plannedTo && new Date(todo.plannedTo) < new Date())
                 )
             }
+            if (hideCompleted) {
+                this.filteredTodos = this.filteredTodos.filter((todo) => !todo.isCompleted)
+            }
         }
     }
 
-    resetFilter = () => this.filteredTodos = undefined;
+    resetFilter = () => {
+        this.filteredTodos = undefined;
+        this.sortTodos();
+    }
 
     getTodos = async () => {
         this.status = TodosStoreStatus.GetTodosFetching;
@@ -145,7 +160,7 @@ class TodosStore {
 
             if (localStorageTodos !== null) {
                 this.todos = JSON.parse(localStorageTodos) as TodoModel[];
-                this.sortTodos(TodosSortType.CreatedAtDesc);
+                this.sortTodos();
             } else {
                 this.todos = [];
             }
@@ -224,7 +239,8 @@ class TodosStore {
                 description: todoToAddDto.description,
                 createdAt: new Date().toISOString(),
                 plannedTo: todoToAddDto.plannedTo,
-                name: todoToAddDto.name
+                name: todoToAddDto.name,
+                isCompleted: false
             }
 
             this.todos?.push(todo);
@@ -266,7 +282,8 @@ class TodosStore {
                         ...todo,
                         name: todoToEditDto.name,
                         description: todoToEditDto.description,
-                        plannedTo: todoToEditDto.plannedTo
+                        plannedTo: todoToEditDto.plannedTo,
+                        isCompleted: todoToEditDto.isCompleted
                     }
                 }
                 return todo;
@@ -282,6 +299,18 @@ class TodosStore {
     updateInCurrentTodo = (todo: TodoToEditDto) => {
         if (this.currentTodo) {
             this.currentTodo = {...this.currentTodo, ...todo};
+        }
+    }
+
+    updateTodos = (id: string, newTodo: TodoModel) => {
+        if (this.todos) {
+            this.todos = this.todos.map(todo => {
+                if (todo.id === id) {
+                    return {...todo, ...newTodo};
+                }
+                return todo;
+            });
+
         }
     }
 

@@ -7,9 +7,9 @@ import mapper from "../helpers/mapper";
 
 class TodosService {
 
-    getTodos = async (): Promise<TodoDto[]> => {
+    getTodos = async (user: Types.ObjectId): Promise<TodoDto[]> => {
         try {
-            const todos = await TodoModel.find().sort({createdAt: 1}).exec();
+            const todos = await TodoModel.find({user: user}).sort({createdAt: 1}).exec();
 
             return todos.map((item) => mapper.toTodoDto(item));
         } catch (e) {

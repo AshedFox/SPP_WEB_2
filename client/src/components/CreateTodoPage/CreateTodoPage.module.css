@@ -10,4 +10,67 @@
   border-radius: 8px;
   padding: 20px;
 }
+.container .content_container .content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.container .content_container .content .title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #fafafa;
+}
+.container .content_container .content .form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.container .content_container .content .form .fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.container .content_container .content .form .fields .label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #fafafa;
+  font-size: 14px;
+  padding: 0 10px;
+}
+.container .content_container .content .form .fields .label .input {
+  background-color: #ececec;
+  border-radius: 10px;
+  box-shadow: 2px 4px 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 7px 10px;
+  font-size: 12px;
+  outline: none;
+  border: none;
+}
+.container .content_container .content .form .fields .label .input:not(:last-child) {
+  margin-bottom: 20px;
+}
+.container .content_container .content .form .fields .label .input::placeholder {
+  color: #515665;
+}
+.container .content_container .content .form .message.error {
+  color: #fca1a1;
+}
+.container .content_container .content .form .button {
+  color: #fafafa;
+  background-color: #2F3040;
+  border-radius: 10px;
+  flex: 1;
+  padding: 10px;
+  outline: none;
+  border: none;
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 2px 4px 4px 0 transparent;
+  transition: box-shadow 0.4s ease;
+}
+.container .content_container .content .form .button:hover {
+  box-shadow: 2px 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
 /*# sourceMappingURL=CreateTodoPage.module.css.map */

@@ -5,7 +5,8 @@ export interface Todo {
     description?: string,
     user: Types.ObjectId,
     createdAt: Date,
-    plannedTo?: Date
+    plannedTo?: Date,
+    isCompleted: boolean
 }
 
 const schema = new Schema<Todo>({
@@ -13,6 +14,7 @@ const schema = new Schema<Todo>({
     description: {type: Schema.Types.String, required: false, trim: true},
     createdAt: {type: Schema.Types.Date, required: true, default: Date.now},
     plannedTo: {type: Schema.Types.Date, required: false},
+    isCompleted: {type: Schema.Types.Boolean, required: true, default: false},
     user: {type: Schema.Types.ObjectId, required: true, ref: 'User'}
 })
 

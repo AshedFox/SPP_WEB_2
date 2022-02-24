@@ -10,14 +10,23 @@
 
   gap: 8px;
 
+  &.completed {
+    background-color: #e7ffe7 !important;
+  }
+
   &.failed {
-    background-color: #fdb0b0 !important;
+    background-color: #ffdcdc !important;
   }
 
   .header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 5px;
+
+    .checkbox {
+      min-width: 14px;
+      min-height: 14px;
+    }
 
     .name {
       font-size: 20px;
@@ -27,8 +36,11 @@
     }
 
     .delete {
+      flex-shrink: 0;
+      margin-left: auto;
       font-size: 36px;
       line-height: 20px;
+      width: 20px;
       overflow: hidden;
       transition: 0.4s;
       cursor: pointer;
