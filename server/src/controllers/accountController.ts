@@ -36,10 +36,10 @@ class AccountController {
             const result = await accountService.loginUser(loginDto);
 
             if (result) {
-                const accessToken = tokensGenerator.generateAccessToken(result.id.toString());
-                const refreshToken = tokensGenerator.generateRefreshToken();
+                const accessToken = tokensGenerator.createAccessToken(result.id);
+                const refreshToken = await tokensGenerator.createRefreshToken(result.id);
 
-                cookieManager.createTokensCookies(res, accessToken, refreshToken);
+                cookieManager.createTokensCookies(res, accessToken, refreshToken.value);
 
                 return res.status(200).json(result);
             }

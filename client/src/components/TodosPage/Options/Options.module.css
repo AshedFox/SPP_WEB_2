@@ -1,0 +1,107 @@
+.scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll::-webkit-scrollbar-track {
+  background-color: #2F3040;
+  border-radius: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: #e8d8f2;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  background-color: #9a8da1;
+  padding: 10px;
+  border-radius: 8px;
+  gap: 5px;
+  min-width: 250px;
+  max-height: 100%;
+  overflow-y: auto;
+}
+.container::-webkit-scrollbar {
+  width: 10px;
+}
+.container::-webkit-scrollbar-track {
+  background-color: #2F3040;
+  border-radius: 10px;
+}
+.container::-webkit-scrollbar-thumb {
+  background: #e8d8f2;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.container .title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fafafa;
+}
+.container .title .text {
+  font-size: 20px;
+  font-weight: 500;
+}
+.container .title .reset {
+  cursor: pointer;
+  font-size: 8px;
+}
+.container .form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.container .form .fields {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+.container .form .fields .checkbox_label {
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  gap: 5px;
+  font-size: 13px;
+  color: #fafafa;
+}
+.container .form .fields .checkbox_label .checkbox {
+  width: 16px;
+  height: 16px;
+}
+.container .form .fields .label {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5px;
+  gap: 5px;
+  font-size: 13px;
+  color: #fafafa;
+}
+.container .form .fields .label .input {
+  flex: 1;
+  font-size: 12px;
+  border: none;
+  outline: none;
+  background-color: #fafafa;
+  border-radius: 3px;
+  padding: 5px;
+  min-width: 20px;
+}
+.container .form .button {
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  background-color: #515665;
+  color: #fafafa;
+  border-radius: 3px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.container .form .button:hover {
+  background-color: #2F3040;
+}
+/*# sourceMappingURL=Options.module.css.map */

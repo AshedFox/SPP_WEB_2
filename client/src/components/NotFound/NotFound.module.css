@@ -8,6 +8,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: #fafafa;
 }
 .container .content .error404 {
   font-size: 256px;

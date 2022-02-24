@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, SyntheticEvent, useEffect, useState} from 'react';
 import styles from "./AuthModal.module.css";
 import CryptoJS from "crypto-js";
 import {AuthModalStatus, useAuthModal} from "../../contexts/AuthModalContext";
@@ -8,6 +8,7 @@ import {AccountStoreStatus} from "../../stores/account/AccountStoreStatus";
 import {SignUpDto} from "../../dtos/SignUpDto";
 import {MoonLoader} from "react-spinners";
 import {observer} from "mobx-react-lite";
+import {SideBarStatus} from "../SideBar/SideBar";
 
 enum AuthType {
     Login,
@@ -28,7 +29,7 @@ const initialFormValue: FormParams = {
     name: ""
 }
 
-const AuthModal = observer (() => {
+const AuthModal = observer(() => {
     const [formData, setFormData] = useState<FormParams>(initialFormValue);
     const [currentType, setCurrentType] = useState<AuthType>(AuthType.Login);
     const {status, setStatus} = useAuthModal()
@@ -43,6 +44,18 @@ const AuthModal = observer (() => {
             setFormData(initialFormValue);
         }
     }, [storeStatus])
+
+    useEffect(() => {
+        let overflow = document.body.style.overflow;
+
+        if (status !== AuthModalStatus.Closed) {
+            document.body.style.overflow = 'hidden';
+        }
+        return () => {
+            document.body.style.overflow = overflow;
+        }
+    }, [status])
+
 
     const handleLogin = async (e: SyntheticEvent) => {
         e.preventDefault();
@@ -72,6 +85,10 @@ const AuthModal = observer (() => {
         }
     };
 
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setFormData(prev => ({...prev, [e.target.name]: e.target.value}));
+    }
+
     if (status === AuthModalStatus.Closed) {
         return null;
     }
@@ -99,7 +116,11 @@ const AuthModal = observer (() => {
                         <div className={`${styles.title} ${currentType === AuthType.SignUp ? styles.selected : ""}`}
                              onClick={() => setCurrentType(AuthType.SignUp)}>Регистрация</div>
                     </div>
-                    <div className={styles.close} onClick={() => setStatus(AuthModalStatus.Closing)}>✖</div>
+                    <div className={styles.close} onClick={() => {
+                        if (storeStatus !== AccountStoreStatus.LoginFetching && storeStatus !== AccountStoreStatus.SignUpFetching) {
+                            setStatus(AuthModalStatus.Closing)
+                        }
+                    }}>✖</div>
                 </div>
                 {(storeStatus === AccountStoreStatus.LoginFetching || storeStatus === AccountStoreStatus.SignUpFetching) &&
                     <div className={styles.overlay}>
@@ -110,15 +131,13 @@ const AuthModal = observer (() => {
                     currentType === AuthType.Login ?
                         <form className={styles.form} onSubmit={(e: SyntheticEvent) => handleLogin(e)}>
                             <div className={styles.fields}>
-                                <input className={styles.input} value={formData.email}
-                                       name={"email"} type={"text"} required
-                                       placeholder={"Email"} maxLength={320} minLength={5}
-                                       onChange={e => setFormData(prev => ({...prev, email: e.target.value}))}
+                                <input className={styles.input} value={formData.email} name={"email"}
+                                       type={"text"} required placeholder={"Email"} maxLength={320} minLength={5}
+                                       onChange={handleChange}
                                 />
-                                <input className={styles.input} value={formData.password} required
-                                       name={"password"} type={"password"} maxLength={64} minLength={4}
-                                       placeholder={"Пароль"} autoComplete={"currentPassword"}
-                                       onChange={e => setFormData(prev => ({...prev, password: e.target.value}))}
+                                <input className={styles.input} value={formData.password} required name={"password"}
+                                       type={"password"} maxLength={64} minLength={4} placeholder={"Пароль"}
+                                       autoComplete={"currentPassword"} onChange={handleChange}
                                 />
                             </div>
                             {
@@ -129,25 +148,21 @@ const AuthModal = observer (() => {
                         </form> :
                         <form className={styles.form} onSubmit={(e) => handleSignUp(e)}>
                             <div className={styles.fields}>
-                                <input className={styles.input} name={"email"}
-                                       type={"email"} value={formData.email} required
-                                       placeholder={"Email"} maxLength={320} minLength={5}
-                                       onChange={e => setFormData(prev => ({...prev, email: e.target.value}))}
+                                <input className={styles.input} name={"email"} type={"email"} value={formData.email}
+                                       required placeholder={"Email"} maxLength={320} minLength={4}
+                                       onChange={handleChange}
                                 />
-                                <input className={styles.input} name={"password"}
-                                       type={"password"} value={formData.password} required
-                                       placeholder={"Пароль"} maxLength={64} minLength={4}
-                                       onChange={e => setFormData(prev => ({...prev, password: e.target.value}))}
+                                <input className={styles.input} name={"password"} type={"password"}
+                                       value={formData.password} required placeholder={"Пароль"} maxLength={64}
+                                       minLength={4} onChange={handleChange}
                                 />
-                                <input className={styles.input} name={"passwordRepeat"}
-                                       type={"password"} value={formData.passwordRepeat} required
-                                       placeholder={"Пароль (повторно)"} maxLength={64} minLength={4}
-                                       onChange={e => setFormData(prev => ({...prev, passwordRepeat: e.target.value}))}
+                                <input className={styles.input} name={"passwordRepeat"} type={"password"}
+                                       value={formData.passwordRepeat} required placeholder={"Пароль (повторно)"}
+                                       maxLength={64} minLength={4} onChange={handleChange}
                                 />
-                                <input className={styles.input} name={"name"}
-                                       type={"text"} value={formData.name} maxLength={100} required
-                                       placeholder={"Имя пользователя"}
-                                       onChange={e => setFormData(prev => ({...prev, name: e.target.value}))}
+                                <input className={styles.input} name={"name"} type={"text"} value={formData.name}
+                                       minLength={1} maxLength={200} placeholder={"Имя пользователя"}
+                                       onChange={handleChange}
                                 />
                             </div>
                             {

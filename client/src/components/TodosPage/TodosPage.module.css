@@ -1,3 +1,15 @@
+.scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll::-webkit-scrollbar-track {
+  background-color: #2F3040;
+  border-radius: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: #e8d8f2;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
 .container {
   height: 100%;
   padding: 15px 0;
@@ -10,39 +22,81 @@
   border-radius: 8px;
   padding: 20px;
 }
-.container .content_container .message {
+.container .content_container .content {
+  display: flex;
+  gap: 7px;
+  height: 100%;
+}
+.container .content_container .content .message {
+  flex: 1;
   font-size: 15px;
   color: #fafafa;
 }
-.container .content_container .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.container .content_container .content .overlay {
+  flex: 1;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
+  filter: invert();
 }
-.container .content_container .todos_list {
+.container .content_container .content .todos {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 5px;
+}
+@media (max-width: 479.98px) {
+  .container .content_container .content .todos {
+    gap: 3px;
+  }
+}
+.container .content_container .content .todos .options {
+  display: flex;
+  align-items: center;
+}
+@media (max-width: 479.98px) {
+  .container .content_container .content .todos .options {
+    font-size: 12px;
+  }
+}
+.container .content_container .content .todos .options .button {
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 3px 4px;
+  background-color: #fafafa;
+  transition: 0.4s;
+}
+.container .content_container .content .todos .options .button:hover {
+  background-color: #e8d8f2;
+}
+.container .content_container .content .todos .options .sort {
+  margin-left: auto;
+}
+.container .content_container .content .todos .options .sort .select {
+  border-radius: 5px;
+  padding: 1px 2px;
+  outline: none;
+  border: none;
+}
+.container .content_container .content .todos .todos_list {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
   flex: 1;
-  padding-right: 10px;
+  padding-right: 6px;
   gap: 10px;
 }
-.container .content_container .todos_list::-webkit-scrollbar {
+.container .content_container .content .todos .todos_list::-webkit-scrollbar {
   width: 10px;
 }
-.container .content_container .todos_list::-webkit-scrollbar-track {
+.container .content_container .content .todos .todos_list::-webkit-scrollbar-track {
   background-color: #2F3040;
   border-radius: 10px;
 }
-.container .content_container .todos_list::-webkit-scrollbar-thumb {
+.container .content_container .content .todos .todos_list::-webkit-scrollbar-thumb {
   background: #e8d8f2;
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
   border-radius: 10px;

@@ -1,0 +1,98 @@
+@import '../../../less/variables';
+@import '../../../less/customScroll';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  background-color: @color4;
+  padding: 10px;
+  border-radius: 8px;
+  gap: 5px;
+  min-width: 250px;
+  max-height: 100%;
+  overflow-y: auto;
+
+  .scroll();
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: @textColor2;
+
+    .text {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .reset {
+      cursor: pointer;
+      font-size: 8px;
+    }
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    .fields {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+
+      .checkbox_label {
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        gap: 5px;
+        font-size: 13px;
+        color: @textColor2;
+
+        .checkbox {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .label {
+        display: flex;
+        flex-direction: column;
+        padding: 0 5px;
+        gap: 5px;
+        font-size: 13px;
+        color: @textColor2;
+
+        .input {
+          flex: 1;
+          font-size: 12px;
+          border: none;
+          outline: none;
+          background-color: @color7;
+          border-radius: 3px;
+          padding: 5px;
+          min-width: 20px;
+        }
+      }
+    }
+
+    .button {
+      font-size: 15px;
+      font-weight: 500;
+      border: none;
+      outline: none;
+      background-color: @color3;
+      color: @textColor2;
+      border-radius: 3px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: 0.4s;
+
+      &:hover {
+        background-color: @color2;
+      }
+    }
+  }
+}

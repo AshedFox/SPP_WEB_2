@@ -1,7 +1,5 @@
-import {Types} from "mongoose";
-
 export interface TodoDto {
-    id: Types.ObjectId,
+    id: string,
     name: string,
     description?: string,
     user: any,

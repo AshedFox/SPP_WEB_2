@@ -1,0 +1,104 @@
+@import "../../less/variables";
+
+@keyframes open {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes close {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.container {
+  z-index: 99999;
+  position: fixed;
+  display: flex;
+  justify-content: flex-end;
+
+  width: 100vw;
+  background-color: rgba(0,0,0,0.2);
+  height: 100vh;
+  top: 0;
+  left: 0;
+
+  animation-name: open;
+  animation-duration: 300ms;
+
+  &.closing {
+    animation-name: close;
+    animation-duration: 300ms;
+    pointer-events: none;
+  }
+
+  .content {
+    position: relative;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+
+    background-color: @color7;
+
+    animation-name: slide-in;
+    animation-duration: 300ms;
+
+    &.closing {
+      animation-name: slide-out;
+      animation-duration: 300ms;
+      pointer-events: none;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      height: 20px;
+
+      .title {
+        font-size: 20px;
+        line-height: 1;
+        font-weight: 500;
+      }
+
+      .close {
+        margin-left: auto;
+        font-size: 36px;
+        line-height: 1;
+        cursor: pointer;
+        transition: 0.4s;
+
+        &:hover {
+          color: @textColor3;
+        }
+      }
+    }
+  }
+}

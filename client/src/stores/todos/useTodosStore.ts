@@ -1,10 +1,10 @@
 import {createContext, useContext} from "react";
 import todosStore from "./todosStore";
 
-const todosStoreContext = createContext(todosStore);
+const context = createContext(todosStore);
 
 const useTodosStore = () => {
-    return useContext(todosStoreContext);
+    return useContext(context);
 }
 
 export default useTodosStore;

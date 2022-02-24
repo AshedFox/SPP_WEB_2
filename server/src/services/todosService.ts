@@ -9,7 +9,7 @@ class TodosService {
 
     getTodos = async (): Promise<TodoDto[]> => {
         try {
-            const todos = await TodoModel.find().sort({plannedTo: -1}).exec();
+            const todos = await TodoModel.find().sort({createdAt: 1}).exec();
 
             return todos.map((item) => mapper.toTodoDto(item));
         } catch (e) {

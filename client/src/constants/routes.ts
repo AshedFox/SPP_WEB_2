@@ -10,6 +10,10 @@ const routes = {
     todo: {
         path: "/todo/:id",
         pathnameBase: "/todo"
+    },
+    createTodo: {
+        path: "/create",
+        pathnameBase: "/create"
     }
 }
 

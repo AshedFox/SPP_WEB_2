@@ -49,7 +49,6 @@
 }
 .container .content {
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   width: 520px;
@@ -141,11 +140,11 @@
   color: #515665;
 }
 .container .content .form .error {
-  color: #b2493f;
+  color: #ea3a3a;
   font-size: 16px;
 }
 .container .content .form .success {
-  color: #239423;
+  color: #27e027;
   font-size: 16px;
 }
 .container .content .form .button {

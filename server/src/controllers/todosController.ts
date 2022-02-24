@@ -7,11 +7,6 @@ import {Types} from "mongoose";
 
 class TodosController {
     getTodos = async (req: Request, res: Response) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).send({errors: errors.array()});
-        }
-
         try {
             const result = await todosService.getTodos();
             return res.status(200).json(result);
@@ -20,11 +15,6 @@ class TodosController {
         }
     }
     getTodo = async (req: Request, res: Response) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).send({errors: errors.array()});
-        }
-
         try {
             const result = await todosService.getTodo(new Types.ObjectId(req.params.id));
 
@@ -38,18 +28,18 @@ class TodosController {
         }
     }
     createTodo = async (req: Request, res: Response) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).send({errors: errors.array()});
-        }
-
         try {
-            const todo: TodoToAddDto = req.body as TodoToAddDto;
+            const todo: TodoToAddDto = {
+                name: req.body.name,
+                description: req.body.description,
+                plannedTo: req.body.plannedTo,
+                user: req.body.user.sub,
+            };
 
             const result = await todosService.createTodo(todo);
 
             if (result) {
-                return res.send(201).json(result);
+                return res.status(201).json(result);
             } else {
                 return res.sendStatus(500);
             }
@@ -58,17 +48,14 @@ class TodosController {
         }
     }
     updateTodo = async (req: Request, res: Response) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).send({errors: errors.array()});
-        }
-
-        if (req.params.id !== req.body.id) {
-            return res.status(400).send({errors: {id: 'params and body id must be equal'}});
-        }
-
         try {
-            const newTodo = req.body as TodoToEditDto;
+            const newTodo: TodoToEditDto = {
+                id: req.body.id,
+                name: req.body.name,
+                description: req.body.description,
+                plannedTo: req.body.plannedTo,
+                createdAt: req.body.createdAt
+            };
 
             const result = await todosService.getTodo(new Types.ObjectId(req.params.id));
 
@@ -84,11 +71,6 @@ class TodosController {
         }
     }
     deleteTodo = async (req: Request, res: Response) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).send({errors: errors.array()});
-        }
-
         try {
             const todo = await todosService.getTodo(new Types.ObjectId(req.params.id));
 

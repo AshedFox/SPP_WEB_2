@@ -1,6 +1,5 @@
 import {NextFunction, Request, Response} from "express";
 import {body, param, validationResult} from "express-validator";
-import {Types} from "mongoose";
 
 const validate = (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
@@ -12,19 +11,24 @@ const validate = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const getUser = [
-    param('id').exists({checkNull: true}).custom(input => Types.ObjectId.isValid(input)),
+    param('id').exists({checkNull: true}).withMessage('id must exists')
+        .isMongoId().withMessage('id must be correct mongodb id'),
     validate
 ]
 
 const updateUser = [
-    param('id').exists({checkNull: true}).custom(input => Types.ObjectId.isValid(input)),
-    body('email').exists({checkNull: true}).isEmail().isLength({min: 4, max: 320}),
-    body('name').trim().isString().isLength({min: 1, max: 200}),
+    param('id').exists({checkNull: true}).isMongoId(),
+    body('email').exists({checkNull: true}).withMessage('email must exists')
+        .normalizeEmail().isEmail().withMessage('email must be correct'),
+    body('name').optional({checkFalsy: true})
+        .isString().withMessage('name must be string')
+        .trim().isLength({min: 1, max: 200}).withMessage('name must have length between 1 and 200'),
     validate
 ]
 
 const deleteUser = [
-    param('id').exists({checkNull: true}).custom(input => Types.ObjectId.isValid(input)),
+    param('id').exists({checkNull: true}).withMessage('id must exists')
+        .isMongoId().withMessage('id must be correct mongodb id'),
     validate
 ]
 

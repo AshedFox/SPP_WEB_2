@@ -8,5 +8,11 @@ export enum TodosStoreStatus {
     GetTodoError,
     CreateTodoFetching,
     CreateTodoSuccess,
-    CreateTodoError
+    CreateTodoError,
+    UpdateTodoFetching,
+    UpdateTodoSuccess,
+    UpdateTodoError,
+    DeleteTodoFetching,
+    DeleteTodoSuccess,
+    DeleteTodoError,
 }

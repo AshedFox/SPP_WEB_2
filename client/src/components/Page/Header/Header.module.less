@@ -1,17 +1,14 @@
 @import "../../../less/variables";
 
-.container {
+.header{
   position: sticky;
   top:0;
   z-index: 99;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   background: @color1;
-  height: @headerHeight;
 
-  .content {
-    height: 100%;
+  .container {
     max-width: @containerWidth;
-    display: flex;
 
     @media (max-width: @md1) {
       max-width: 970px;
@@ -26,12 +23,26 @@
 
     margin: 0 auto;
 
-    .navigation {
+    .body {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 100%;
+      height: @headerHeight;
       color: @textColor2;
+
+      .navigation {
+        flex: 1;
+        position: relative;
+
+        .links_list {
+          display: flex;
+          align-items: center;
+
+          &> *:not(:last-child) {
+            margin-right: 36px;
+          }
+        }
+      }
 
       .link {
         transition: 0.25s;
@@ -39,19 +50,9 @@
         font-weight: 500;
         border-bottom: 2px solid transparent;
         cursor: pointer;
-        margin-left: auto;
 
         &:hover{
           border-bottom: 2px solid @textColor2;
-        }
-      }
-
-      .links_list {
-        display: flex;
-        align-items: center;
-
-        &> *:not(:last-child) {
-          margin-right: 10px;
         }
       }
     }

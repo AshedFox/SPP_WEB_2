@@ -29,7 +29,7 @@ class UsersController {
         try {
             await usersService.updateUser(req.body as UserToEditDto)
 
-            return res.sendStatus(201);
+            return res.sendStatus(204);
         } catch (e) {
             return res.sendStatus(500);
         }
@@ -38,7 +38,7 @@ class UsersController {
         try {
             await usersService.deleteUser(new Types.ObjectId(req.body.id));
 
-            return res.sendStatus(201);
+            return res.sendStatus(204);
         } catch (e) {
             return res.sendStatus(500);
         }

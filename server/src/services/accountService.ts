@@ -5,8 +5,7 @@ import UserModel from "../models/UserModel";
 import {LoginDto} from "../dtos/LoginDto";
 import {UserDto} from "../dtos/UserDto";
 import mapper from "../helpers/mapper";
-import RefreshTokenModel, {RefreshToken} from "../models/RefreshTokenModel";
-import {Types} from "mongoose";
+import RefreshTokenModel from "../models/RefreshTokenModel";
 import tokensGenerator from "../helpers/tokensGenerator";
 
 class AccountService {
@@ -48,14 +47,13 @@ class AccountService {
             const token = await RefreshTokenModel.findOne({value: refreshToken}).exec();
 
             if (token) {
-                const newToken = new RefreshTokenModel({user: token.user})
-                await newToken.save();
-
                 const userId = token.user.toString();
 
-                token.delete().exec();
+                const newToken = await tokensGenerator.createRefreshToken(userId);
 
-                return {refreshToken: newToken.value, accessToken: tokensGenerator.generateAccessToken(userId)};
+                await RefreshTokenModel.findByIdAndDelete(token.id).exec();
+
+                return {refreshToken: newToken.value, accessToken: tokensGenerator.createAccessToken(userId)};
             }
 
             return null;

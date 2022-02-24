@@ -12,33 +12,49 @@ const validate = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const getTodo = [
-    param('id').exists({checkNull: true}).custom(input => Types.ObjectId.isValid(input)),
+    param('id').exists({checkNull: true}).withMessage('id must exists')
+        .isMongoId().withMessage('id must be correct mongodb id'),
     validate
 ];
 
 const createTodo = [
-    body('name', 'name must be string with length between 3 and 200').exists({checkNull: true})
-        .isString().trim().isLength({min: 1, max: 200}),
-    body('description', 'description must be string with length between 0 and 2000').isString(),
-    body('userId').custom(input => Types.ObjectId.isValid(input)),
-    body('createdAt', 'createdAt must be correct date').exists({checkNull: true}).isDate(),
-    body('plannedTo', 'plannedTo must be correct date').isDate(),
+    body('name')
+        .exists({checkNull: true}).withMessage('name must exists')
+        .isString().withMessage('name must be string')
+        .trim().isLength({min: 1, max: 200}).withMessage('name must have length between 1 and 200'),
+    body('description').optional({checkFalsy: true})
+        .isString().withMessage('description must be string')
+        .trim().isLength({max: 2000}).withMessage('description must have length between 0 and 2000'),
+    body('plannedTo').optional({checkFalsy: true})
+        .isISO8601().withMessage('plannedTo must be correct ISO8601 date')
+        .toDate(),
     validate
 ]
 
 const updateTodo = [
-    param('id').custom(input => Types.ObjectId.isValid(input)),
-    body('id').custom(input => Types.ObjectId.isValid(input)),
-    body('name', 'name must be string with length between 3 and 200').exists({checkNull: true})
-        .isString().trim().isLength({min: 1, max: 200}),
-    body('description', 'description must be string with length between 0 and 2000').isString(),
-    body('createdAt', 'createdAt must be correct date').exists({checkNull: true}).isDate(),
-    body('plannedTo', 'plannedTo must be correct date').isDate(),
+    param('id').exists({checkNull: true}).withMessage('id must exists')
+        .isMongoId().withMessage('id must be correct mongodb id'),
+    body('id').exists({checkNull: true}).withMessage('id must exists')
+        .isMongoId().withMessage('id must be correct mongodb id'),
+    body('name')
+        .exists({checkNull: true}).withMessage('name must exists')
+        .isString().withMessage('name must be string')
+        .trim().isLength({min: 1, max: 200}).withMessage('name must have length between 1 and 200'),
+    body('description').optional({checkFalsy: true})
+        .isString().withMessage('description must be string')
+        .trim().isLength({max: 2000}).withMessage('description must have length between 0 and 2000'),
+    body('createdAt').optional({checkFalsy: true})
+        .isISO8601().withMessage('createdAt must be correct ISO8601 date')
+        .toDate(),
+    body('plannedTo').optional({checkFalsy: true})
+        .isISO8601().withMessage('plannedTo must be correct ISO8601 date')
+        .toDate(),
     validate
 ]
 
 const deleteTodo = [
-    param('id').custom(input => Types.ObjectId.isValid(input)),
+    param('id').exists({checkNull: true}).withMessage('id must exists')
+        .isMongoId().withMessage('id must be correct mongodb id'),
     validate
 ]
 

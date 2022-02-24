@@ -1,10 +1,10 @@
 import {createContext, useContext} from "react";
 import usersStore from "./accountStore";
 
-const usersStoreContext = createContext(usersStore);
+const context = createContext(usersStore);
 
 const useAccountStore = () => {
-    return useContext(usersStoreContext);
+    return useContext(context);
 }
 
 export default useAccountStore;

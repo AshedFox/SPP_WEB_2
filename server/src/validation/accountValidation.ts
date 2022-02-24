@@ -11,15 +11,21 @@ const validate = (req: Request, res: Response, next: NextFunction) => {
 }
 
 const signUp = [
-    body('email').exists({checkNull: true}).isEmail().isLength({min: 4, max: 320}),
-    body('passwordHash').exists({checkNull: true}).isHash("sha512"),
-    body('name').trim().isString().isLength({min: 1, max: 200}),
+    body('email').exists({checkNull: true}).withMessage('email must exists')
+        .normalizeEmail().isEmail().withMessage('email must be correct'),
+    body('passwordHash').exists({checkNull: true}).withMessage('passwordHash must exists')
+        .isHash("sha512").withMessage('passwordHash must be sha512 hash'),
+    body('name').optional({checkFalsy: true})
+        .isString().withMessage('name must be string')
+        .trim().isLength({min: 1, max: 200}).withMessage('name must have length between 1 and 200'),
     validate
 ]
 
 const login = [
-    body('email').exists({checkNull: true}).isEmail().isLength({min: 4, max: 320}),
-    body('passwordHash').exists({checkNull: true}).isHash("sha512"),
+    body('email').exists({checkNull: true}).withMessage('email must exists')
+        .normalizeEmail().isEmail().withMessage('email must be correct'),
+    body('passwordHash').exists({checkNull: true}).withMessage('passwordHash must exists')
+        .isHash("sha512").withMessage('passwordHash must be sha512 hash'),
     validate
 ]
 
