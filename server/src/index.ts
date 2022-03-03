@@ -7,6 +7,8 @@ import cors from 'cors';
 import todosRouter from './routes/todosRoutes';
 import accountRouter from './routes/accountRoutes';
 import usersRouter from './routes/usersRoutes';
+import filesRouter from './routes/filesRoutes';
+import * as path from "path";
 
 dotenv.config();
 const app = express();
@@ -21,11 +23,11 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-//app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/todos', todosRouter);
 app.use('/api/account', accountRouter);
 app.use('/api/users', usersRouter);
+app.use('/api/files', filesRouter)
 
 
 mongoose.connect(process.env.CONNECTION_STRING as string).then(

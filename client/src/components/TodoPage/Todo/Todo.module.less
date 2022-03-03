@@ -1,4 +1,5 @@
 @import "../../../less/variables";
+@import "../../../less/customScroll";
 
 .container {
   position: relative;
@@ -58,20 +59,7 @@
       width: 100%;
       height: 100%;
 
-      &::-webkit-scrollbar {
-        width: 10px;
-      }
-
-      &::-webkit-scrollbar-track {
-        background-color: @color7;
-        border-radius: 10px;
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background: @color4;
-        box-shadow: inset 0 0 6px rgba(0,0,0, 0.1);
-        border-radius: 10px;
-      }
+      .scroll_dark();
     }
   }
   .footer {
@@ -83,6 +71,31 @@
     border-radius: 8px;
     box-shadow: 1px -1px 4px 1px rgba(0,0,0,0.25);
     padding: 9px 12px;
+
+    .files {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      overflow-x: auto;
+      width: 100%;
+      padding: 5px;
+
+      .scroll_dark();
+
+      .filesInput {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.4s;
+
+        &:hover {
+          color: @color2;
+        }
+      }
+    }
 
     .datetime {
       display: flex;

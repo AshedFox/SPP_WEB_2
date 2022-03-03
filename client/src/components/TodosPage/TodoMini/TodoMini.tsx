@@ -33,10 +33,17 @@ const TodoMini: FC<Props> = observer(({todo}) => {
         const newTodo: TodoModel = {...todo, isCompleted: e.target.checked};
 
         if (account) {
-            updateTodo(todo.id, newTodo).then(() => updateTodos(todo.id, newTodo))
+            updateTodo(todo.id, newTodo).then((res) => {
+                if (res) {
+                    updateTodos(todo.id, newTodo)
+                }
+            })
         } else {
-            updateLocalTodo(todo.id, newTodo)
-            updateTodos(todo.id, newTodo)
+            const res = updateLocalTodo(todo.id, newTodo);
+
+            if (res) {
+                updateTodos(todo.id, newTodo)
+            }
         }
     }
 

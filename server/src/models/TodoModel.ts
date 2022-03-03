@@ -1,21 +1,15 @@
-import {model, Schema, Types} from "mongoose";
-
-export interface Todo {
-    name: string,
-    description?: string,
-    user: Types.ObjectId,
-    createdAt: Date,
-    plannedTo?: Date,
-    isCompleted: boolean
-}
+import {model, Schema} from "mongoose";
+import {ObjectId} from "mongodb";
+import {Todo} from "../interfaces/Todo";
 
 const schema = new Schema<Todo>({
-    name: {type: Schema.Types.String, required: true, minlength: 1, maxlength: 200, trim: true},
-    description: {type: Schema.Types.String, required: false, trim: true},
-    createdAt: {type: Schema.Types.Date, required: true, default: Date.now},
-    plannedTo: {type: Schema.Types.Date, required: false},
-    isCompleted: {type: Schema.Types.Boolean, required: true, default: false},
-    user: {type: Schema.Types.ObjectId, required: true, ref: 'User'}
+    name: {type: String, required: true, minlength: 1, maxlength: 200, trim: true},
+    description: {type: String, required: false, trim: true},
+    createdAt: {type: Date, required: true, default: Date.now},
+    plannedTo: {type: Date, required: false},
+    isCompleted: {type: Boolean, required: true, default: false},
+    user: {type: ObjectId, required: true, ref: 'User'},
+    files: [{name: String, url: String, size: Number, mimetype: String, required: false}]
 })
 
 export default model<Todo>('Todo', schema);

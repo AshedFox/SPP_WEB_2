@@ -50,6 +50,8 @@ const updateTodo = [
         .isISO8601().withMessage('plannedTo must be correct ISO8601 date')
         .toDate(),
     body('isCompleted').isBoolean().withMessage('isCompleted must be boolean'),
+    body('files').optional()
+        .isArray().withMessage('files must be array'),
     validate
 ]
 

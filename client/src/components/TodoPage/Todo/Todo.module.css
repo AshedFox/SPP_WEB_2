@@ -1,3 +1,28 @@
+.scroll_light::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll_light::-webkit-scrollbar-track {
+  background-color: #2F3040;
+  border-radius: 10px;
+}
+.scroll_light::-webkit-scrollbar-thumb {
+  background: #e8d8f2;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.scroll_dark::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.scroll_dark::-webkit-scrollbar-track {
+  background-color: #fafafa;
+  border-radius: 10px;
+}
+.scroll_dark::-webkit-scrollbar-thumb {
+  background: #9a8da1;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
 .container {
   position: relative;
   display: flex;
@@ -50,6 +75,7 @@
 }
 .container .main .desc::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 .container .main .desc::-webkit-scrollbar-track {
   background-color: #fafafa;
@@ -68,6 +94,39 @@
   border-radius: 8px;
   box-shadow: 1px -1px 4px 1px rgba(0, 0, 0, 0.25);
   padding: 9px 12px;
+}
+.container .footer .files {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  width: 100%;
+  padding: 5px;
+}
+.container .footer .files::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.container .footer .files::-webkit-scrollbar-track {
+  background-color: #fafafa;
+  border-radius: 10px;
+}
+.container .footer .files::-webkit-scrollbar-thumb {
+  background: #9a8da1;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.container .footer .files .filesInput {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.4s;
+}
+.container .footer .files .filesInput:hover {
+  color: #2F3040;
 }
 .container .footer .datetime {
   display: flex;

@@ -131,9 +131,6 @@
   outline: none;
   border: none;
 }
-.container .content .form .fields .input:not(:last-child) {
-  margin-bottom: 20px;
-}
 .container .content .form .fields .input::placeholder {
   color: #515665;
 }

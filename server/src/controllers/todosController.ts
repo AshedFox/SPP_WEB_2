@@ -3,6 +3,7 @@ import todosService from "../services/todosService";
 import {TodoToAddDto} from "../dtos/TodoToAddDto";
 import {TodoToEditDto} from "../dtos/TodoToEditDto";
 import {Types} from "mongoose";
+import filesService from "../services/filesService";
 
 class TodosController {
     getTodos = async (req: Request, res: Response) => {
@@ -54,7 +55,8 @@ class TodosController {
                 description: req.body.description,
                 plannedTo: req.body.plannedTo,
                 createdAt: req.body.createdAt,
-                isCompleted: req.body.isCompleted
+                isCompleted: req.body.isCompleted,
+                files: req.body.files
             };
 
             const result = await todosService.getTodo(new Types.ObjectId(req.params.id));
@@ -78,7 +80,13 @@ class TodosController {
                 return res.sendStatus(404);
             }
 
+            const todoFiles = todo.files ? todo.files : [];
+
             await todosService.deleteTodo(new Types.ObjectId(req.params.id));
+
+            for (const file of todoFiles) {
+                await filesService.deleteFile(file.name);
+            }
 
             return res.sendStatus(204);
         } catch (e) {

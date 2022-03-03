@@ -1,3 +1,5 @@
+import {FileDto} from "./FileDto";
+
 export interface TodoDto {
     id: string,
     name: string,
@@ -5,6 +7,6 @@ export interface TodoDto {
     user: any,
     createdAt: Date,
     plannedTo?: Date,
-    isCompleted: boolean
-
+    isCompleted: boolean,
+    files?: FileDto[]
 }
