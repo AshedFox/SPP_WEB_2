@@ -22,12 +22,12 @@ const upload = multer({storage: diskStorage});
 const router = Router();
 
 /* GET api/files/:name */
-router.get("/:name", jwtMiddleware.authorizeToken, filesValidation.getFile, filesController.getFile)
+router.get("/:name", filesValidation.getFile, filesController.getFile)
 
 /* POST api/files/ */
-router.post('/', jwtMiddleware.authorizeToken, upload.array('files', 10), filesController.upload);
+router.post('/', upload.array('files', 10), filesController.upload);
 
 /* DELETE api/files/ */
-router.delete('/:name', jwtMiddleware.authorizeToken, filesValidation.deleteFile, filesController.deleteFile)
+router.delete('/:name', filesValidation.deleteFile, filesController.deleteFile)
 
 export default router;

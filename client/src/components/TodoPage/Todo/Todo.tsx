@@ -27,8 +27,6 @@ const Todo: FC<Props> = observer(({todo}) => {
                 const res = await filesService.upload(acceptedFiles);
 
                 if (res.status === 200) {
-                    console.log(res);
-
                     const files: FileModel[] = res.data;
 
                     setTodoToEdit(prev => ({

@@ -236,11 +236,9 @@ class TodosStore {
 
             const todo: TodoModel = {
                 id: uuidv4(),
-                description: todoToAddDto.description,
                 createdAt: new Date().toISOString(),
-                plannedTo: todoToAddDto.plannedTo,
-                name: todoToAddDto.name,
-                isCompleted: false
+                isCompleted: false,
+                ...todoToAddDto
             }
 
             this.todos?.push(todo);
@@ -280,10 +278,7 @@ class TodosStore {
                 if (todo.id === id) {
                     todo = {
                         ...todo,
-                        name: todoToEditDto.name,
-                        description: todoToEditDto.description,
-                        plannedTo: todoToEditDto.plannedTo,
-                        isCompleted: todoToEditDto.isCompleted
+                        ...todoToEditDto
                     }
                 }
                 return todo;
