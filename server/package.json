@@ -2,12 +2,10 @@
   "name": "lab2_server",
   "version": "0.0.0",
   "private": true,
-  "main": "dist/index.js",
+  "main": "build/index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node .",
-    "dev": "nodemon .",
-    "prestart": "npm run build"
+    "build": "tsc ./src",
+    "start": "nodemon ./src/index.ts"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

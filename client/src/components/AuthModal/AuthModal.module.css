@@ -122,6 +122,7 @@
 .container .content .form .fields {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 .container .content .form .fields .input {
   background-color: #ececec;
